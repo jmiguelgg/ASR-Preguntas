@@ -1,11 +1,14 @@
-import os
+import os  
+import sys                         
 import time
 import shutil
-import sys
-import telnetlib
-import getpass
 
-def obtenerIP():
+""" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    La función obtenerIP() lee la lista de IPs del archivo: ips.txt y la muestra en pantalla con 
+    un retardo de 1 segundo a través de la función sllep()
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+""" 
+def obtenerIP():                
     archivo = open("ips.txt", "r")
     print (" ... OBTENIEDO IPs ... ")
     for c in range(0, 25):
@@ -14,6 +17,12 @@ def obtenerIP():
         time.sleep(1)
     print (" ... IPs obtenidas ... \n")
 
+""" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    La función realizarPING() lee la lista de direcciones IP del archivo: ips.txt y realiza un ping
+    a cada IP a través de la función os.system(). Se realizan 4 iteraciones, es decir, 
+    a cada IP de la lista de IP's se le realizan 4 PING en total.
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+"""
 def realizarPING():
     archivo2 = open("adverts.txt", "w")
     for i in range(1, 4):
@@ -34,8 +43,13 @@ def realizarPING():
                 
         archivo.close()
     archivo2.close()
-
-print (" - - - - - - - - - - - - - PIN PULLER - - - - - - - - - - - - - \n")
+""" %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    Al final de realizar los PING, las IP que no respondieron al PING se registran en un archivo de 
+    texto llamado: adverts.txt . Al final del programa se lee el archivo adverts.txt y se imprime en 
+    pantalla.
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+"""
+print (" - - - - - - - - - - - - - PING PULLER - - - - - - - - - - - - - \n")
 
 obtenerIP()
 realizarPING()

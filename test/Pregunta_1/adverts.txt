@@ -1,0 +1,19 @@
+************ ITERACION 1 ************ 
+************ ITERACION 2 ************ 
+ La ip 10.0.1.1
+no respondio 
+ La ip 10.0.1.2
+no respondio 
+ La ip 10.0.2.1
+no respondio 
+ La ip 10.0.2.2
+no respondio 
+************ ITERACION 3 ************ 
+ La ip 10.0.1.1
+no respondio 
+ La ip 10.0.1.2
+no respondio 
+ La ip 10.0.2.1
+no respondio 
+ La ip 10.0.2.2
+no respondio 
