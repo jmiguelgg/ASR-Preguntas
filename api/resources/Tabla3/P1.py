@@ -1,5 +1,6 @@
 import json
 import os
+from ..Util.Notifications import Notifications
 from flask import Flask, request, jsonify, url_for
 from werkzeug.utils import secure_filename
 from flask_restful import Api
@@ -35,4 +36,6 @@ def setFile():
                     json_build[count]['response'] = True
                     json_build[count]['ping'] = i+1
             count += 1
+    notify = Notifications()
+    notify.sendEmail("hsantana.2611@gmail.com","Ping Puller",str(json_build))
     return jsonify(json_build)
