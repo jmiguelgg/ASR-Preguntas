@@ -14,10 +14,10 @@ app.config['UPLOAD_FOLER'] = UPLOAD_FOLER
 
 @app.route('/api/Tabla3/P1', methods=['POST'])
 def pingPuller():
-    #numbers = ['5215586141860','5215545077393']
-    #emails = ['coldpcmickey@gmail.com','hsantana.2611@gmail.com']
-    numbers = ['5215586141860']
-    emails = ['di_tutticolori@hotmail.com']
+    numbers = ['5215586141860','5215545077393']
+    emails = ['coldpcmickey@gmail.com','hsantana.2611@gmail.com']
+    #numbers = ['5215586141860']
+    #emails = ['di_tutticolori@hotmail.com']
     file = request.files['file']
     num_ping = int(request.args.get('numPing'))
     timeToPing = request.args.get('timePing')
