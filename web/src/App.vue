@@ -9,12 +9,16 @@
         <div class="field">
           <label for="numero">Número para WhatsApp</label>
           <input type="text" v-model="number" v-model.trim="number" minlength="13" placeholder="Numero celular" required />
+          <div class="ui pointing label">
+            Clave del país + numero de región + lada local + número celular
+          </div>
         </div>
       </div>
       <div class="fields">
         <div class="field">
           <label for="ping">Numero de pings</label>
           <select v-model="numPing" class="ui dropdown" required>
+            <option value="">Número</option>
             <option v-for="i in options" :key="i" :value="i">{{ i }}</option>
           </select>
         </div>
