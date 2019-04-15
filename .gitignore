@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/macos,flask,python,windows
-# Edit at https://www.gitignore.io/?templates=macos,flask,python,windows
+# Created by https://www.gitignore.io/api/vuejs,macos,flask,python,windows,visualstudiocode
+# Edit at https://www.gitignore.io/?templates=vuejs,macos,flask,python,windows,visualstudiocode
 
 ### Flask ###
 instance/*
@@ -214,6 +214,24 @@ Temporary Items
 
 # Pyre type checker
 
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
+### Vuejs ###
+# Recommended template: Node.gitignore
+
+node_modules/
+npm-debug.log
+yarn-error.log
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -239,4 +257,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/macos,flask,python,windows
+# End of https://www.gitignore.io/api/vuejs,macos,flask,python,windows,visualstudiocode
