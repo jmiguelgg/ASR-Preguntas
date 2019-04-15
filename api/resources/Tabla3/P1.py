@@ -3,10 +3,18 @@ import os
 from ..Util.Notifications import Notifications
 from flask import Flask, request, jsonify, url_for
 from werkzeug.utils import secure_filename
+from werkzeug.datastructures import ImmutableMultiDict
 from flask_restful import Api
 
 app = Flask(__name__)
 api = Api(app)
+
+@app.after_request
+def after_request(response):
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+  return response
 
 UPLOAD_FOLER = '~/Tabla3/APingPoller'
 ALOWED_EXTENSIONS = set(['txt'])
@@ -14,13 +22,15 @@ app.config['UPLOAD_FOLER'] = UPLOAD_FOLER
 
 @app.route('/api/Tabla3/P1', methods=['POST'])
 def pingPuller():
-    numbers = ['5215586141860','5215545077393']
-    emails = ['coldpcmickey@gmail.com','hsantana.2611@gmail.com']
-    #numbers = ['5215586141860']
-    #emails = ['di_tutticolori@hotmail.com']
+    #numbers = ['5215586141860','5215545077393']
+    #emails = ['coldpcmickey@gmail.com','hsantana.2611@gmail.com']
+    data = ImmutableMultiDict(request.form)
+    data.to_dict(flat=False)
     file = request.files['file']
-    num_ping = int(request.args.get('numPing'))
-    timeToPing = request.args.get('timePing')
+    emails = [data['email']]
+    numbers = [data['number']]
+    num_ping = int(data['numPing'])
+    timeToPing = data['timePing']
     resptPP = doPingPuller(num_ping,timeToPing,file)
     message = message_formater(resptPP)
     notify_email(emails,message)
