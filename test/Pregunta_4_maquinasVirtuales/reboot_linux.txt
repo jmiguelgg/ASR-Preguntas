@@ -1,0 +1,8 @@
+2019-04-14T23:28:34-05:00 lubuntu-pc1 systemd-logind[525]: System is rebooting.
+2019-04-14T23:32:39-05:00 lubuntu-pc1 systemd-logind[507]: System is rebooting.
+2019-04-15T02:35:35-05:00 lubuntu-pc1 systemd-logind[494]: System is rebooting.
+2019-04-15T02:38:18-05:00 lubuntu-pc1 systemd-logind[515]: System is rebooting.
+2019-04-15T02:39:10-05:00 lubuntu-pc1 systemd-logind[525]: System is rebooting.
+2019-04-15T16:08:45-05:00 lubuntu-pc1 systemd-logind[557]: System is rebooting.
+2019-04-15T16:10:49-05:00 lubuntu-pc1 systemd-logind[548]: System is rebooting.
+2019-04-15T16:13:09-05:00 lubuntu-pc1 systemd-logind[523]: System is rebooting.
