@@ -1,6 +1,6 @@
 import json
 import os
-#from ..Util.Notifications import Notifications
+from ..Util.Notifications import Notifications
 from flask import Flask, request, jsonify, url_for
 from werkzeug.utils import secure_filename
 from werkzeug.datastructures import ImmutableMultiDict
