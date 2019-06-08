@@ -1,21 +1,21 @@
-""" PREGUNTA 3 - REDES III """
 import os
 import time
 from funcionesP3 import *
 
-contendio_original = os.listdir("/var/log/192.168.3.1")
+carpetaCompartida = "/Volumes/R3/10.3.200.1"
+contendio_original = os.listdir(carpetaCompartida)
 
 while 1:
     contendio_original.sort()
     tamanio_or = len(contendio_original)
     print(contendio_original)
 
-    contenido_nuevo = os.listdir("/var/log/192.168.3.1")
+    contenido_nuevo = os.listdir(carpetaCompartida)
     contenido_nuevo.sort()
     tamanio_nuevo = len(contenido_nuevo)
 
     if tamanio_or != tamanio_nuevo:
-        print(" ¡¡¡ SYSLOG DETECTADO !!! ")
+        print("SYSLOG DETECTADO !!! ")
         diferencia = tamanio_nuevo - tamanio_or
         print(" Original: %d " % tamanio_or )
         print(" Nuevo: %d " % tamanio_nuevo)
@@ -24,12 +24,12 @@ while 1:
             recorrido = 0
             while recorrido != diferencia:
                 print(contenido_nuevo)
-                archivo_syslog = open(r"/var/log/192.168.3.1/" + contenido_nuevo[recorrido], "r")
+                archivo_syslog = open(r"" + carpetaCompartida + "/" + contenido_nuevo[recorrido], "r")
                 syslog = archivo_syslog.read()
                 print(syslog)
                 nivel = obtenerNivel(syslog)
-                enviarCorreo(nivel, syslog)
-                enviarMensaje(nivel, syslog)
+                #enviarCorreo(nivel, syslog)
+                #enviarMensaje(nivel, syslog)
 
                 recorrido = recorrido + 1
                 archivo_syslog.close()
@@ -41,12 +41,12 @@ while 1:
             print(contenido_nuevo)
             while recorrido != tamanio_nuevo:
                 print(contenido_nuevo)
-                archivo_syslog = open(r"/var/log/192.168.3.1/" + contenido_nuevo[recorrido], "r")
+                archivo_syslog = open(r"" + carpetaCompartida + "/" + contenido_nuevo[recorrido], "r")
                 syslog = archivo_syslog.read()
                 print(syslog)
                 nivel = obtenerNivel(syslog)
-                enviarCorreo(nivel, syslog)
-                enviarMensaje(nivel, syslog)
+                #enviarCorreo(nivel, syslog)
+                #enviarMensaje(nivel, syslog)
 
                 recorrido = recorrido + 1
                 archivo_syslog.close()

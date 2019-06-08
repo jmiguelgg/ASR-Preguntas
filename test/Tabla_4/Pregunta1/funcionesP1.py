@@ -4,7 +4,7 @@ from twilio.rest import Client
 import time
 import smtplib
 from email.mime.text import MIMEText
-""" .............. Función para extraer la información del HW de un router a través de telnet .............. """
+""" .............. Funcion para extraer la informacion del HW de un router a traves de telnet .............. """
 def extraerInformacion(direccion):
     user = "humberto"
     password = "123456"
@@ -16,7 +16,7 @@ def extraerInformacion(direccion):
     archivo = open(nombre_archivo, "w+")
     tn = telnetlib.Telnet(direccion)
 
-    print(" ¡¡¡ CONEXIÓN TELNET EXITOSA !!! ")
+    print(" !!! CONEXION TELNET EXITOSA !!! ")
 
     tn.read_until(b"Username: ")
     tn.write(user.encode('ascii') + b"\n")
@@ -33,10 +33,10 @@ def extraerInformacion(direccion):
     print(archivo.read())
     archivo.close()
 
-    print (" ¡¡¡ FIN DE LA CONEXIÓN !!! ")
+    print (" ! FIN DE LA CONEXION !!! ")
     return nombre_archivo
 """ ..................................................................................... """
-""" ......... Función para extraer el id del router .......... """
+""" ......... Funcion para extraer el id del router .......... """
 def extraerID(nombre_archivo):
     bandera = 0
     archivo = open(nombre_archivo, "r")
@@ -55,7 +55,7 @@ def extraerID(nombre_archivo):
 
     return hostname
 """ ..................................................................................... """
-""" ......... Función para extraer la información del HW del router .......... """
+""" ......... Funcion para extraer la informacion del HW del router .......... """
 def extraerInformacionHardware(nombre_archivo, nombre_router):
     bandera = 0
     archivo = open(nombre_archivo, "r")
@@ -88,13 +88,13 @@ def extraerInformacionHardware(nombre_archivo, nombre_router):
 
     return hardware
 """ ..................................................................................... """
-""" .......................... Función para enviar un WhatsApp .......................... """
+""" .......................... Funcion para enviar un WhatsApp .......................... """
 def enviarWhats(router, ip, contenido):
     account_sid = 'ACb149282acccbdf97c1004710c2e3d11d'
     auth_token = '8d0aa7e211ea99f907ea7b6de8f4ca46'
     cliente = Client(account_sid, auth_token)
 
-    whats = " ID: " + router + "\n IP: " + ip + "\n Información: " + contenido 
+    whats = " ID: " + router + "\n IP: " + ip + "\n Informacion: " + contenido 
 
     mensaje = cliente.messages.create(
     body = whats,
@@ -102,17 +102,17 @@ def enviarWhats(router, ip, contenido):
     to = 'whatsapp:+5215545077393'
     )
     time.sleep(1)
-    print(" ¡ Notificación de WhatsApp enviada !")
+    print(" ! Notificacion de WhatsApp enviada !")
 
-""" ..................... Función para enviar un correo electrónico ................ """
+""" ..................... Funcion para enviar un correo electronico ................ """
 def enviarCorreo(router, ip, contenido):
     from_addr = "redes3manager@gmail.com"
     to_addr = "hsantana.2611@gmail.com"
 
-    mensaje = MIMEText("ID: %s \n IP: %s \n Información: %s " % (router, ip, contenido))
+    mensaje = MIMEText("ID: %s \n IP: %s \n Informacion: %s " % (router, ip, contenido))
     mensaje['From'] = from_addr
     mensaje['To'] = to_addr
-    mensaje['Subject'] = " Información de dispositivo"
+    mensaje['Subject'] = " Informacion de dispositivo"
 
     username = "redes3manager@gmail.com"
     password = "escom_1pn"
