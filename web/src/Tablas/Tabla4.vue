@@ -26,7 +26,7 @@
           </div>
           <div class="field">
               <label>Pedir</label>
-            <input type="submit" class="positive ui button" value="Ping Puller" />
+            <input type="submit" class="positive ui button" value="Traer info" />
           </div>
         </div>
       </form>
@@ -45,7 +45,7 @@
           </div>
           <div class="field">
               <label>Pedir</label>
-            <input type="submit" class="positive ui button" value="Ping Puller" />
+            <input type="submit" class="positive ui button" value="Respaldar" />
           </div>
         </div>
       </form>

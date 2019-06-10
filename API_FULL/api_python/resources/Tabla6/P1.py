@@ -21,7 +21,7 @@ class T4_P1(Resource):
         file = request.files['file']
         emails = [data['email']]
         numbers = [data['number']]
-        resptPP = getInfoHardware(file)
+        resptPP = getStadistics(file)
         message = message_formater(resptPP)
         notify_email(emails,message)
         notify_whatsapp(numbers,message)
@@ -31,9 +31,9 @@ def allowed_file(file_name):
     raise '.' in file_name and file_name.rsplit('.',1)[1] in ALOWED_EXTENSIONS
 
 def file_json_IP(file):
-    return [{'ip': ip.rstrip('\n'),'fecha': '','hostname':'','info': ''} for ip in file]
+    return [{'ip': ip.rstrip('\n'),'fecha': '','hostname':'','interface': []} for ip in file]
 
-def getInfoHardware(file):
+def getStadistics(file):
     json_build = file_json_IP(file)
     counter = 0
     for ip in json_build:
