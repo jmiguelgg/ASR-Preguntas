@@ -7,3 +7,7 @@ export const HTTP_PYTHON = axios.create({
 export const HTTP_EXPRESS = axios.create({
   baseURL: `http://localhost:3000/user`
 })
+
+export const HTTP_EXPRESS_TABLA_4 = axios.create({
+  baseURL: `http://localhost:3000/tabla4`
+})

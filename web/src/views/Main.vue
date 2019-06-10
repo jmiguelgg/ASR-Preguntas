@@ -9,6 +9,7 @@
       <div class="twelve wide stretched column">
         <div class="ui segment">
           <Tabla3 v-show="tablas[0].status" />
+          <Tabla4 v-show="tablas[1].status" />
         </div>
       </div>
     </div>
@@ -17,9 +18,10 @@
 
 <script>
 import Tabla3 from "@/Tablas/Tabla3";
+import Tabla4 from "@/Tablas/Tabla4";
 export default {
   components: {
-    Tabla3
+    Tabla3, Tabla4
   },
   data() {
     return {

@@ -11,6 +11,7 @@ mongoose.connect('mongodb://redesfull:xyz123@localhost:27017/redes3', { poolSize
 }))
 
 const user = require('./src/routes/user');
+const tabla4 = require('./src/routes/tabla4');
 
 const app = express();
 
@@ -34,5 +35,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/user', user);
+app.use('/tabla4', tabla4);
 
 module.exports = app;

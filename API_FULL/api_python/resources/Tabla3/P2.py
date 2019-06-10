@@ -22,7 +22,7 @@ def do_stuff():
         if ready[0]:
             data, addr = s.recvfrom(4048)
             t = time.localtime()
-            current_time = time.strftime("%H:%M:%S", t)
+            current_time = time.strftime("%d/%m/%y %H:%M:%S", t)
             counter += 1
             result.append({'id':counter,'fecha':current_time,'trap':data.decode('latin-1')})
         if stop_it.is_set():
@@ -35,7 +35,7 @@ def notify_All(data,correo,numero,tiempo):
     notify.sendEmail([correo],'Traps',message)
     notify.sendWhatsApp(message,[numero])
 
-class P2(Resource):
+class T3_P2(Resource):
     def post(self):
         correo = request.form['correo']
         numero = request.form['numero']

@@ -5,19 +5,25 @@ from flask import Flask, request, jsonify, url_for
 from flask_restful import Resource, Api
 from threading import Thread, Event
 from multiprocessing.pool import ThreadPool
+from werkzeug.datastructures import ImmutableMultiDict
 import time
 import select
 import os
 
 stop_it = Event()
 carpetaCompartida = "/Volumes/R3/"
-carpetas = ["10.3.200.1","10.1.200.1","10.3.200.2","10.4.200.2","10.6.200.2","10.8.200.2","10.9.200.2","10.10.200.1","10.13.200.2","10.5.200.1","10.5.200.2"]
 
 def escuchaCarpeta(carpeta,otro):
     data = []
-    contendio_original = os.listdir(carpetaCompartida+carpeta)
+    flag = False
+    try:
+        contendio_original = os.listdir(carpetaCompartida+carpeta)
+        flag = True
+    except:
+        flag = False
+        print('La carpeta no existe')
     counter = 0
-    while True:
+    while flag:
         contendio_original.sort()
         tamanio_or = len(contendio_original)
 
@@ -37,7 +43,7 @@ def escuchaCarpeta(carpeta,otro):
                     reinicio = obtenerReinicio(syslog)
                     ip = obtenerIP(syslog)
                     t = time.localtime()
-                    current_time = time.strftime("%H:%M:%S", t)
+                    current_time = time.strftime("%d/%m/%y %H:%M:%S", t)
                     counter += 1
                     data.append({'id':counter,'ip':ip,'nivel':nivel,'fecha':current_time,'syslog':syslog,'reinicio':reinicio})
                     recorrido = recorrido + 1
@@ -53,8 +59,10 @@ def escuchaCarpeta(carpeta,otro):
                     syslog = archivo_syslog.read()
                     nivel = obtenerNivel(syslog)
                     reinicio = obtenerReinicio(syslog)
-                    ip = obtenerIP(syslog)
-                    data.append({'syslog':syslog,'nivel':nivel,'reinicio':reinicio,'ip':ip})
+                    t = time.localtime()
+                    current_time = time.strftime("%d/%m/%y %H:%M:%S", t)
+                    counter += 1
+                    data.append({'id':counter,'ip':ip,'nivel':nivel,'fecha':current_time,'syslog':syslog,'reinicio':reinicio})
                     recorrido = recorrido + 1
                     archivo_syslog.close()
                 
@@ -116,16 +124,21 @@ def obtenerIP(syslog):
 def notify_All(data,correo,numero,tiempo):
     message = "En un tiempo de " + str(tiempo) + " segundos "  + " se recibieron " + str(len(data)) + " Syslogs"
     notify = Notifications()
-    notify.sendEmail([correo],'Syslogs',message)
-    notify.sendWhatsApp(message,[numero])
+    notify.sendEmail(correo,'Syslogs',message)
+    notify.sendWhatsApp(message,numero)
 
-class P3(Resource):
+class T3_P3(Resource):
     def post(self):
-        correo = request.form['correo']
-        numero = request.form['numero']
-        tiempo = int(request.form['tiempo'])
+        data = ImmutableMultiDict(request.form)
+        data.to_dict(flat=False)
+        file = request.files['file']
+        emails = [data['email']]
+        numbers = [data['number']]
+        tiempo = int(data['tiempo'])
         result = []
-
+        carpetas = []
+        for ip in file:
+            carpetas.append(ip.rstrip('\n'))
         pool = ThreadPool(processes=len(carpetas))
         async_result = []
         for x in carpetas:
@@ -135,5 +148,5 @@ class P3(Resource):
         for x in async_result:
             result.append(x.get()) # get the return value from your function.
         stop_it.clear()
-        notify_All(result,correo,numero,tiempo)
+        notify_All(result,emails,numbers,tiempo)
         return jsonify(result)

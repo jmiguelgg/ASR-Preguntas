@@ -9,3 +9,5 @@ DRAM configuration is 64 bits wide with parity enabled.
 
 Configuration register is 0x2102
 
+R1#
+R2#exit

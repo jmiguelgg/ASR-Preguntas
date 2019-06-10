@@ -69,10 +69,14 @@
         <div class="ui text loader">Captando Syslogs</div>
       </div>
       <form v-on:submit.prevent="CaptSyslogs" class="ui form">
-        <div class="two fields">
+        <div class="three fields">
           <div class="field">
             <label>Tiepo de captura de Syslogs</label>
             <input type="text" placeholder="Tiempo en segundos" maxlength="4" v-model="timeSyslogs" required>
+          </div>
+          <div class="field">
+            <label for="file">Archivo con IP's</label>
+            <input type="file" ref="ipsfile2" @change="setFileiIPs2" required />
           </div>
           <div class="field">
             <label>Inicio</label>
@@ -88,10 +92,14 @@
         <div class="ui text loader">Captando reinicio de router</div>
       </div>
       <form v-on:submit.prevent="CaptRestart" class="ui form">
-        <div class="two fields">
+        <div class="three fields">
           <div class="field">
             <label>Tiepo de captura de reinicios</label>
             <input type="text" placeholder="Tiempo en segundos" maxlength="4" v-model="timeRestart" required>
+          </div>
+          <div class="field">
+            <label for="file">Archivo con IP's</label>
+            <input type="file" ref="ipsfile3" @change="setFileiIPs3" required />
           </div>
           <div class="field">
             <label>Inicio</label>
@@ -123,8 +131,9 @@ export default {
     CaptRestart(){
       this.active_loader4 = true
       let formData = new FormData();
-      formData.append('correo',this.email);
-      formData.append('numero',this.number)
+      formData.append('file', this.file3[0],this.file3[0].name);
+      formData.append('email',this.email);
+      formData.append('number',this.number);
       formData.append('tiempo',this.timeRestart);
       HTTP_PYTHON.post('Tabla3/P3',formData,{
         headers: {
@@ -157,8 +166,9 @@ export default {
     CaptSyslogs(){
       this.active_loader3 = true
       let formData = new FormData();
-      formData.append('correo',this.email);
-      formData.append('numero',this.number)
+      formData.append('file', this.file2[0],this.file2[0].name);
+      formData.append('email',this.email);
+      formData.append('number',this.number);
       formData.append('tiempo',this.timeSyslogs);
       HTTP_PYTHON.post('Tabla3/P3',formData,{
         headers: {
@@ -174,11 +184,17 @@ export default {
     setFileiIPs(){
       this.file = this.$refs.ipsfile.files;
     },
+    setFileiIPs2(){
+      this.file2 = this.$refs.ipsfile2.files;
+    },
+    setFileiIPs3(){
+      this.file3 = this.$refs.ipsfile3.files;
+    },
     PingPuller() {
       let formData = new FormData();
       formData.append('file', this.file[0],this.file[0].name);
       formData.append('email',this.email);
-      formData.append('number',this.number)
+      formData.append('number',this.number);
       formData.append('numPing',this.numPing);
       formData.append('timePing',this.timePing);
       this.active_loader1 = true
@@ -211,6 +227,8 @@ export default {
       numPing: "",
       timePing: "",
       file: "",
+      file2: "",
+      file3: "",
       active_loader1: false,
       active_loader2: false,
       active_loader3: false,

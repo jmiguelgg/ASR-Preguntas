@@ -5,23 +5,10 @@ from flask import Flask, request, jsonify, url_for
 from werkzeug.datastructures import ImmutableMultiDict
 from flask_restful import Resource, Api
 
-#app = Flask(__name__)
-#api = Api(app)
-
-#@app.after_request
-#def after_request(response):
-#  response.headers.add('Access-Control-Allow-Origin', '*')
-#  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-#  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-#  return response
-
-UPLOAD_FOLER = '~/Tabla3/APingPoller'
 ALOWED_EXTENSIONS = set(['txt'])
 
-#@app.route('/api/Tabla3/P1', methods=['POST'])
-class P1(Resource):
+class T3_P1(Resource):
     def post(self):
-        print(request.form)
         data = ImmutableMultiDict(request.form)
         data.to_dict(flat=False)
         file = request.files['file']

@@ -1,3 +1,4 @@
+route add -net 10.1.200.0/24 -gateway 10.1.200.1
 route add -net 10.2.200.0/24 -gateway 10.1.200.1
 route add -net 10.3.200.0/24 -gateway 10.1.200.1
 route add -net 10.4.200.0/24 -gateway 10.1.200.1
