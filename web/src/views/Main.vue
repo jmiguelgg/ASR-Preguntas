@@ -10,6 +10,7 @@
         <div class="ui segment">
           <Tabla3 v-show="tablas[0].status" />
           <Tabla4 v-show="tablas[1].status" />
+          <Tabla6 v-show="tablas[3].status" />
         </div>
       </div>
     </div>
@@ -19,9 +20,10 @@
 <script>
 import Tabla3 from "@/Tablas/Tabla3";
 import Tabla4 from "@/Tablas/Tabla4";
+import Tabla6 from "@/Tablas/Tabla6";
 export default {
   components: {
-    Tabla3, Tabla4
+    Tabla3, Tabla4, Tabla6
   },
   data() {
     return {
