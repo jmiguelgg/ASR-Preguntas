@@ -1,0 +1,5 @@
+
+R8#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R8(config)#exit
+R8#exit
