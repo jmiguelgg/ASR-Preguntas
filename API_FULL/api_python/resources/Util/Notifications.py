@@ -2,7 +2,7 @@ import sys
 import os
 import smtplib
 from twilio.rest import Client
-from email.MIMEText import MIMEText
+from email.mime.text import MIMEText
 
 account_sid = 'ACb149282acccbdf97c1004710c2e3d11d'
 auth_token = '8d0aa7e211ea99f907ea7b6de8f4ca46'

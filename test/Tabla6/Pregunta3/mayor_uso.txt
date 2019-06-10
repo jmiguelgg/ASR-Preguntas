@@ -1,0 +1,10 @@
+R4,Serial0/0,83682
+R1,Serial0/0,88854
+R8,Serial0/0,52972
+R9,Serial0/0,1024252
+R6,Serial0/0,60636
+R7,Serial0/0,29666
+R10,Serial0/0,1023932
+R5,Serial0/0,80316
+R2,Serial0/0,51830
+R3,Serial0/1,96172
