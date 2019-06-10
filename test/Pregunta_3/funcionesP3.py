@@ -1,8 +1,8 @@
-""" FUNCIONES PARA LA EJECUCIÓN DE LA PREGUNTA 4 - REDES III """
+""" FUNCIONES PARA LA EJECUCIoN DE LA PREGUNTA 4 - REDES III """
 import os 
 from twilio.rest import Client
 
-""" ........................ Función para obtener el nivel de un syslog ....................... """
+""" ........................ Funcion para obtener el nivel de un syslog ....................... """
 def obtenerNivel(syslog):
     posicion = syslog.find("%")
     bandera = 0
@@ -20,47 +20,47 @@ def obtenerNivel(syslog):
     elif nivel == 1:
         cadena = " [ NIVEL 1 ] --> [ ALERTA ] \n "
     elif nivel == 2:
-        cadena = " [ NIVEL 2 ] --> [ CRÍTICA ] \n "
+        cadena = " [ NIVEL 2 ] --> [ CRITICA ] \n "
     elif nivel == 3:
         cadena = " [ NIVEL 3 ] --> [ ERROR ] \n "
     elif nivel == 4:
         cadena = " [ NIVEL 4 ] --> [ WARNING ] \n "
     elif nivel == 5:
-        cadena = " [ NIVEL 5 ] --> [ NOTIFICACIÓN ] \n "
+        cadena = " [ NIVEL 5 ] --> [ NOTIFICACION ] \n "
     elif nivel == 6:
-        cadena = " [ NIVEL 6 ] --> [ INFORMACIÓN ] \n "
+        cadena = " [ NIVEL 6 ] --> [ INFORMACION ] \n "
     elif nivel == 7:
         cadena = " [ NIVEL 7 ] --> [ DEBUG ] \n "
     
     return cadena
 """ ..................................................................................... """
 
-""" ........................ Función para mandar un correo ........................ """
+""" ........................ Funcion para mandar un correo ........................ """
 def enviarCorreo(nivel, contenido):
     mensaje = nivel + contenido
-    asunto = " ¡ SYSLOG DETECTADO ! "
+    asunto = " ! SYSLOG DETECTADO ! "
     comando = "echo \"" + mensaje + "\" | mail -s \"" + asunto + "\" hsantana.2611@gmail.com"
     os.system(comando)
-    print(" ¡ Notificación de correo enviada !")
+    print(" ! Notificacion de correo enviada !")
 """ ..................................................................................... """
 
-""" ........................ Función para mandar un whatsApp ........................ """
+""" ........................ Funcion para mandar un whatsApp ........................ """
 
 def enviarMensaje(nivel, contenido):
     account_sid = 'ACb149282acccbdf97c1004710c2e3d11d'
     auth_token = '8d0aa7e211ea99f907ea7b6de8f4ca46'
 
-    whatsapp = " ¡ SYSLOG DETECTADO ! \n" + nivel + contenido
+    whatsapp = " ! SYSLOG DETECTADO ! \n" + nivel + contenido
     cliente = Client(account_sid, auth_token)
     mensaje = cliente.messages.create(
         body = whatsapp,
         from_= 'whatsapp:+14155238886',
         to = 'whatsapp:+5215545077393'
     )
-    print(" ¡ Notificación de WhatsApp enviada !")
+    print(" ! Notificacion de WhatsApp enviada !")
 """ ..................................................................................... """
 
-""" ........................ Función para saber si el syslog corresponde a un reboot ........................ """
+""" ........................ Funcion para saber si el syslog corresponde a un reboot ........................ """
 def obtenerReinicio(syslog):
     palabra = "STARTSTOP"
     posicion = syslog.find(palabra)
@@ -71,7 +71,7 @@ def obtenerReinicio(syslog):
     return reinicio
 """ ..................................................................................... """
 
-""" ........................ Función para obtener la IP de un syslog ........................ """
+""" ........................ Funcion para obtener la IP de un syslog ........................ """
 def obtenerIP(syslog):
     inicio = syslog.find("-05:00 ")
     inicio = inicio + 7
