@@ -1,65 +1,133 @@
-""" FUNCIONES PARA LA PREGUNTA 1 - REDES III - TABLA 6 """
-import os 
+""" FUNCIONES PARA LA PREGUNTA 1 - TABLA 6 - REDES III """
+import telnetlib
+from twilio.rest import Client
+import time
+import smtplib
+from email.mime.text import MIMEText
+""" ----------------------------- FUNCION PARA EXTRAER EL NOMBRE DE UN ROUTER ----------------------------------- """
+def extraerNombre(direccion):
+    user = "humberto"
+    password = "123456"
+    show = "conf t"
+    salir = "exit"
+    archivo = open("nombre", "w+")
 
-""" ------------------ FUNCION PARA VINCULAR CADA INTERFAZ DE RED CON SU RESPECTIVO TRÁFICO DE DATOS --------------- """
-def vincularDatos():
-    ruta = r"../Pregunta1/Tratamiento"
-    estadisticas = r"Estadisticas/"
-    archivos = os.listdir(ruta)
-    for archivo in archivos:
-        linea = archivo
-        posicion = linea.find("-")
-        nombre_archivo = linea[0:posicion]
-        print(nombre_archivo)
+    tn = telnetlib.Telnet(direccion)
 
-        informacion = open(ruta + "/" + archivo, "r")
-        salida = open(estadisticas + nombre_archivo, "w+")
-        numero_lineas = len(informacion.readlines())
-        informacion.seek(0)
-        recorrido = 0
-        while recorrido != numero_lineas:
-            linea2 = informacion.readline()
-            if linea2.find("FastEthernet") >= 0 and linea2.find("/") >= 0:
-                pos_interfaz = linea2.find(" ")
-                nombre_ethernet = linea2[0:pos_interfaz]
-                print(nombre_ethernet)
-                linea3 = informacion.readline()
-                entradas = obtenerBytes(linea3)
-                recorrido = recorrido + 1
-                linea3 = informacion.readline()
-                salidas = obtenerBytes(linea3)
-                recorrido = recorrido + 1
-                total = entradas + salidas
-                texto = nombre_ethernet + "," + str(total) + "\n"
-                print(texto)
-                salida.write(texto)
-                
-            if linea2.find("Serial") >= 0 and linea2.find("/") >= 0:
-                pos_interfaz = linea2.find(" ")
-                nombre_serial = linea2[0:pos_interfaz]
-                print(nombre_serial)
-                linea4 = informacion.readline()
-                recorrido = recorrido + 1
-                linea4 = informacion.readline()
-                entradas = obtenerBytes(linea3)
-                recorrido = recorrido + 1
-                linea4 = informacion.readline()
-                salidas = obtenerBytes(linea3)
-                recorrido = recorrido + 1
-                total = entradas + salidas
-                print("Total: %d " % total)
-                salida.write(nombre_serial + "," + str(total) + "\n")
-            recorrido = recorrido + 1
-        salida.close()
-        print("------------------------------------------------------------------------")
-""" ---------------------------------------------------------------------------------------------------------- """
-def obtenerBytes(linea):
-    inicio = linea.find(",")
-    fin = linea.find("bytes")
+    print(" ¡¡¡ CONEXIÓN TELNET EXITOSA !!! ")
 
-    recorrido = linea[inicio + 1:fin - 1]
-    recorrido = int(recorrido)
+    tn.read_until(b"Username: ")
+    tn.write(user.encode('ascii') + b"\n")
+    if password:
+        tn.read_until(b"Password: ")
+        tn.write(password.encode('ascii') + b"\n")
 
-    return recorrido
+    tn.write(show.encode('ascii') + b"\n")    
+    tn.write(salir.encode('ascii') + b"\n")
+    tn.write(salir.encode('ascii') + b"\n")
 
+
+    archivo.write(tn.read_all().decode('ascii'))
+    print(archivo.read())
+    archivo.close()
+
+    print (" ¡¡¡ FIN DE LA CONEXIÓN !!! ")
+
+    archivo = open("nombre", "r")
+    b = 0
+    while b != 2:
+        linea = archivo.readline()
+        b = b + 1
+    pos = linea.find("#")
+    nombre = linea[0:pos]
+    archivo.close()
+    return nombre
+""" ------------------------------------------------------------------------------------------------------------- """
+
+""" ----------------------------- FUNCION PARA EXTRAER LA INFORMACION DE LAS INTERFACES DE UN ROUTER ------------ """
+def extraerInformacion(nombre, direccion):
+    user = "humberto"
+    password = "123456"
+    show = "show interfaces"
+    salir = "exit"
+    espacio = " "
+    ruta = r"Interfaces/"
+    archivo = open(ruta + nombre, "w+")
+
+    tn = telnetlib.Telnet(direccion)
+
+    print(" ¡¡¡ CONEXIÓN TELNET EXITOSA !!! ")
+
+    tn.read_until(b"Username: ")
+    tn.write(user.encode('ascii') + b"\n")
+    if password:
+        tn.read_until(b"Password: ")
+        tn.write(password.encode('ascii') + b"\n")
+
+    tn.write(show.encode('ascii') + b"\n")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"")
+    tn.write(espacio.encode('ascii') + b"\n")    
+    tn.write(salir.encode('ascii') + b"\n")
+
+
+    archivo.write(tn.read_all().decode('ascii'))
+    print(archivo.read())
+    archivo.close()
+
+    print (" ¡¡¡ FIN DE LA CONEXIÓN !!! ")
+""" ------------------------------------------------------------------------------------------------------------- """
+
+""" ----------------------------- FUNCION PARA LIMPAR LA INFORMACION DE LAS INTERFACES DE UN ROUTER ------------- """
+def tratarInformacion(nombre):
+    origen = r"Interfaces/" 
+    destino = r"Tratamiento/"
+    interfaces = ['FastEthernet', 'Serial']
+    archivo_origen = open(origen + nombre, "r")
+    dia = time.strftime("%d")
+    mes = time.strftime("%m")
+    anio = time.strftime("%y")
+    fecha = "-" + dia + "-" + mes + "-" + anio
+    archivo_destino = open(destino + nombre + fecha, "w+")
     
+
+    n_lineas = len(archivo_origen.readlines())
+    archivo_origen.seek(0)
+
+    encabezado = " -------------------Este reporte se generó en la fecha: " + fecha + "---------------------------\n"
+    archivo_destino.write(encabezado)
+    puntero = 0
+    while puntero != n_lineas:
+        linea = archivo_origen.readline()
+        posicion_int = linea.find("FastEthernet")
+        if posicion_int >= 0:
+            archivo_destino.write(linea)
+        
+        posicion_int = linea.find("Serial")
+        if posicion_int >= 0:
+            archivo_destino.write(linea)
+        
+        posicion_input = linea.find("packets input")
+        if posicion_input >= 0:
+            archivo_destino.write(linea)
+
+        posicion_output = linea.find("packets output")
+        if posicion_output >= 0:
+            archivo_destino.write(linea)
+
+        puntero = puntero + 1
+    print("P: %d " % puntero)
+    
+    
+    archivo_origen.close()
+    archivo_destino.close()
+    #print("T: %d " % n_lineas)

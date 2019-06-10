@@ -1,0 +1,35 @@
+ -------------------Este reporte se generó en la fecha: -06-06-19---------------------------
+FastEthernet0/0 is up, line protocol is up 
+     558 packets input, 39007 bytes
+     551 packets output, 41841 bytes, 0 underruns
+Serial0/0 is administratively down, line protocol is down 
+  Hardware is GT96K Serial
+     0 packets input, 0 bytes, 0 no buffer
+     0 packets output, 0 bytes, 0 underruns
+FastEthernet0/1 is up, line protocol is up 
+     366 packets input, 30670 bytes
+     517 packets output, 37885 bytes, 0 underruns
+Serial0/1 is administratively down, line protocol is down 
+  Hardware is GT96K Serial
+     0 packets input, 0 bytes, 0 no buffer
+     0 packets output, 0 bytes, 0 underruns
+Serial0/2 is administratively down, line protocol is down 
+  Hardware is GT96K Serial
+     0 packets input, 0 bytes, 0 no buffer
+     0 packets output, 0 bytes, 0 underruns
+Serial0/3 is administratively down, line protocol is down 
+  Hardware is GT96K Serial
+     0 packets input, 0 bytes, 0 no buffer
+     0 packets output, 0 bytes, 0 underruns
+FastEthernet1/0 is up, line protocol is up 
+     0 packets input, 0 bytes
+     161 packets output, 16002 bytes, 0 underruns
+FastEthernet2/0 is administratively down, line protocol is down 
+     0 packets input, 0 bytes
+     0 packets output, 0 bytes, 0 underruns
+FastEthernet3/0 is administratively down, line protocol is down 
+ --More--              0 packets input, 0 bytes
+     0 packets output, 0 bytes, 0 underruns
+FastEthernet4/0 is administratively down, line protocol is down 
+     0 packets input, 0 bytes
+     0 packets output, 0 bytes, 0 underruns
