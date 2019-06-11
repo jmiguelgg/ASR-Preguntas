@@ -22,7 +22,7 @@
         <div class="two fields">
           <div class="field">
             <label for="file">Archivo con IP's</label>
-            <input type="file" ref="ipsfile" @change="setFileiIPs" required />
+            <input type="file" ref="ipsfile_1" @change="setFileiIPs(1)" required />
           </div>
           <div class="field">
               <label>Pedir</label>
@@ -41,7 +41,7 @@
         <div class="two fields">
           <div class="field">
             <label for="file">Archivo con IP's</label>
-            <input type="file" ref="ipsfile2" @change="setFileiIPs2" required />
+            <input type="file" ref="ipsfile_2" @change="setFileiIPs(2)" required />
           </div>
           <div class="field">
               <label>Pedir</label>
@@ -64,7 +64,7 @@
           </div>
           <div class="field">
             <label for="file">Archivo con IP's</label>
-            <input type="file" ref="ipsfile2" @change="setFileiIPs2" required />
+            <input type="file" ref="ipsfile_3" @change="setFileiIPs(3)" required />
           </div>
           <div class="field">
             <label>Inicio</label>
@@ -209,11 +209,18 @@ export default {
       if (id != 1)
         this.listaNetworks.pop()
     },
-    setFileiIPs(){
-      this.file = this.$refs.ipsfile.files;
-    },
-    setFileiIPs2(){
-      this.file2 = this.$refs.ipsfile2.files;
+    setFileiIPs(num){
+      switch (num) {
+        case 1:
+          this.file = this.$refs.ipsfile_1.files;
+          break;
+        case 2:
+          this.file2 = this.$refs.ipsfile_2.files;
+          break;
+        case 3:
+          this.file3 = this.$refs.ipsfile_3.files;
+          break;
+      }
     },
     getTemplates(){
       HTTP_EXPRESS_TABLA_4.post('/templates',{userId: this.userId})
@@ -265,7 +272,7 @@ export default {
       let formData = new FormData();
       formData.append('file', this.file[0],this.file[0].name);
       formData.append('email',this.email);
-      formData.append('number',this.number)
+      formData.append('number',this.number);
       this.active_loader1 = true
       HTTP_PYTHON.post('/Tabla4/P1',formData,{
         headers: {
@@ -282,7 +289,7 @@ export default {
       let formData = new FormData();
       formData.append('file', this.file2[0],this.file2[0].name);
       formData.append('email',this.email);
-      formData.append('number',this.number)
+      formData.append('number',this.number);
       this.active_loader2 = true
       HTTP_PYTHON.post('/Tabla4/P2',formData,{
         headers: {
@@ -298,7 +305,7 @@ export default {
     CaptSyslogs(){
       this.active_loader3 = true
       let formData = new FormData();
-      formData.append('file', this.file2[0],this.file2[0].name);
+      formData.append('file', this.file3[0],this.file3[0].name);
       formData.append('email',this.email);
       formData.append('number',this.number);
       formData.append('tiempo',this.timeSyslogs);
@@ -328,8 +335,9 @@ export default {
       userId: "",
       email: "",
       number: "",
-      file: "",
-      file2: "",
+      file: [],
+      file2: [],
+      file3: [],
       active_loader1: false,
       active_loader2: false,
       active_loader3: false,

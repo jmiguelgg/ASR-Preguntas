@@ -63,6 +63,7 @@ def extraerInformacion(nombre, direccion):
     if password:
         tn.read_until(b"Password: ")
         tn.write(password.encode('ascii') + b"\n")
+    os.remove(ip['ip'])
 
     tn.write(show.encode('ascii') + b"\n")
     tn.write(espacio.encode('ascii') + b"")

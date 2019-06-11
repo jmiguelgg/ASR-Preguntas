@@ -1,7 +1,7 @@
 <template>
     <div class="ui container segment">
         <div id="chart">
-            <apexchart type="area" height="350" :options="chartOptions" :series="series">
+            <apexchart type="bar" height="350" :options="chartOptions" :series="series">
             </apexchart>
         </div>
     </div>
@@ -9,38 +9,96 @@
 
 <script>
 export default {
+    props:{
+        data: []
+    },
+    /*watch:{
+        data: function(datos){
+            let tmp1 = []
+            let tmp2 = []
+            for (const elem in datos) {
+                tmp1.push(datos[elem].hostname)
+                tmp2.push(datos[elem].porcentaje)
+            }
+            this.chartOptions.xaxis.categories = tmp1
+            this.series.data = tmp2
+        }
+    },*/
+    mounted(){
+        let tmp1 = []
+        let tmp2 = []
+        for (const elem in this.data) {
+            tmp1.push(this.data[elem].hostname)
+            tmp2.push(this.data[elem].porcentaje)
+        }
+        this.chartOptions.xaxis.categories = tmp1
+        this.series[0].data = tmp2
+    },
     data(){
         return{
             series: [{
-                name: 'series1',
-                data: [31, 40, 28, 51, 42, 109, 100]
-            },
-            {
-                name: 'series2',
-                data: [11, 32, 45, 32, 34, 52, 41]
-            },
-            {
-                name: 'series3',
-                data: [21, 12, 45, 16, 37, 56, 150]
-            }
-            ],
+                name: 'Servings',
+                data: []
+            }],
             chartOptions: {
+                annotations: {
+                    points: [{
+                        x: 'Bananas',
+                        seriesIndex: 0,
+                        label: {
+                            borderColor: '#775DD0',
+                            offsetY: 0,
+                            style: {
+                                color: '#fff',
+                                background: '#775DD0',
+                            },
+                            text: 'Bananas are good',
+                        }
+                    }]
+                },
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                },
+                plotOptions: {
+                    bar: {
+                        columnWidth: '50%',
+                        endingShape: 'rounded'	
+                    }
+                },
                 dataLabels: {
                     enabled: true
                 },
                 stroke: {
-                    curve: 'smooth'
+                    width: 2
+                },
+                grid: {
+                    row: {
+                        colors: ['#fff', '#f2f2f2']
+                    }
                 },
                 xaxis: {
-                    type: 'datetime',
-                    categories: ["2018-09-19T00:00:00", "2018-09-19T01:30:00", "2018-09-19T02:30:00",
-                    "2018-09-19T03:30:00", "2018-09-19T04:30:00", "2018-09-19T05:30:00",
-                    "2018-09-19T06:30:00"
-                    ],
+                    labels: {
+                        rotate: -45
+                    },
+                    categories: [],
                 },
-                tooltip: {
-                    x: {
-                        format: 'dd/MM/yy HH:mm'
+                yaxis: {
+                    title: {
+                        text: 'Servings',
+                    },
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'light',
+                        type: "horizontal",
+                        shadeIntensity: 0.25,
+                        gradientToColors: undefined,
+                        inverseColors: true,
+                        opacityFrom: 0.85,
+                        opacityTo: 0.85,
+                        stops: [50, 0, 100]
                     },
                 }
             }

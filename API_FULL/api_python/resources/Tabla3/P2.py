@@ -27,6 +27,7 @@ def do_stuff():
             result.append({'id':counter,'fecha':current_time,'trap':data.decode('latin-1')})
         if stop_it.is_set():
             break
+    print(result)
     return result
 
 def notify_All(data,correo,numero,tiempo):

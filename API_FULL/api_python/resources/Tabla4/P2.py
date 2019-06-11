@@ -13,8 +13,8 @@ password = "123456"
 copy = "copy running-config tftp"
 destino = "10.1.200.3"
 salir = "exit"
-#carpetaCompartida = "/Volumes/R3/"
-carpetaCompartida = "/Users/jmiguel/Desktop/respaldoSyslog/10.6.200.2/"
+carpetaCompartida = "/Volumes/R3/configuraciones/"
+#carpetaCompartida = "/Users/jmiguel/Desktop/respaldoSyslog/10.6.200.2/"
 
 class T4_P2(Resource):
     def post(self):
@@ -26,7 +26,7 @@ class T4_P2(Resource):
         resptPP = getInfoHardware(file)
         message = message_formater(resptPP)
         notify_email(emails,message)
-        notify_whatsapp(numbers,message)
+        #notify_whatsapp(numbers,message)
         return jsonify(resptPP)
 
     def get(self):

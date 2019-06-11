@@ -24,7 +24,7 @@ class T4_P1(Resource):
         resptPP = getInfoHardware(file)
         message = message_formater(resptPP)
         notify_email(emails,message)
-        notify_whatsapp(numbers,message)
+        #notify_whatsapp(numbers,message)
         return jsonify(resptPP)
 
 def allowed_file(file_name):
@@ -55,8 +55,9 @@ def getInfoHardware(file):
             tn.write(espacio.encode('ascii') + b"\n")
 
             tn.write(salir.encode('ascii') + b"\n")
-            archivo = open(ip['ip'], "wr+")
+            archivo = open(ip['ip'], "w+")
             archivo.write(tn.read_all().decode('ascii'))
+            archivo.seek(0)
             bandera = 0
             while bandera != 1:
                 cadena = archivo.readline()
@@ -66,8 +67,8 @@ def getInfoHardware(file):
                     cadena_final = cadena
 
             json_build[counter]['hostname'] = cadena_final[0:posicion]
+            archivo.seek(0)
             bandera = 0
-
             while bandera != 1:
                 cadena = archivo.readline()
                 posicion = cadena.find("export@cisco.com.")

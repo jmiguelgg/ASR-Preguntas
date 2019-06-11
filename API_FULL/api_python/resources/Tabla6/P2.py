@@ -11,11 +11,11 @@ ALOWED_EXTENSIONS = set(['txt'])
 user = "humberto"
 password = "123456"
 show1 = "conf t"
-show2 = "show interfaces"
+show2 = "show processes CPU"
 salir = "exit"
 espacio = " "
 
-class T6_P1(Resource):
+class T6_P2(Resource):
     def post(self):
         data = ImmutableMultiDict(request.form)
         data.to_dict(flat=False)
@@ -32,7 +32,7 @@ def allowed_file(file_name):
     raise '.' in file_name and file_name.rsplit('.',1)[1] in ALOWED_EXTENSIONS
 
 def file_json_IP(file):
-    return [{'ip': ip.rstrip('\n'),'fecha': '','hostname':'','info': []} for ip in file]
+    return [{'ip': ip.rstrip('\n'),'fecha': '','hostname':'','porcentaje': 0} for ip in file]
 
 def getStadistics(file):
     json_build = file_json_IP(file)
@@ -69,7 +69,7 @@ def getStadistics(file):
             tn.write(espacio.encode('ascii') + b"\n")    
             tn.write(salir.encode('ascii') + b"\n")
 
-            archivo = open(ip['ip'], "w+")
+            archivo = open(ip['ip'], "w")
             archivo.write(tn.read_all().decode('ascii'))
             archivo.close()
             archivo = open(ip['ip'], "r")
@@ -79,30 +79,19 @@ def getStadistics(file):
                 b = b + 1
             pos = linea.find("#")
             json_build[counter]['hostname'] = linea[0:pos]
-            n_lineas = len(archivo.readlines())
             archivo.seek(0)
-            puntero = 0
-            while puntero != n_lineas:
+            bandera = 0
+            while bandera != 1:
                 linea = archivo.readline()
-                posicion_int = linea.find("FastEthernet")
-                if posicion_int >= 0:
-                    json_build[counter]['info'].append({'data':linea})
-                
-                posicion_int = linea.find("Serial")
-                if posicion_int >= 0:
-                    json_build[counter]['info'].append({'data':linea})
-                
-                posicion_input = linea.find("packets input")
-                if posicion_input >= 0:
-                    json_build[counter]['info'].append({'data':linea})
-
-                posicion_output = linea.find("packets output")
-                if posicion_output >= 0:
-                    json_build[counter]['info'].append({'data':linea})
-
-                puntero = puntero + 1
+                if linea.find(":") >= 0 and linea.find("/"):
+                    inicio = linea.find(":")
+                    fin = linea.find("/")
+                    porcentaje = linea[inicio + 2: fin - 1]
+                    print(porcentaje)
+                    bandera = 1
+            json_build[counter]['porcentaje'] = int(porcentaje)
             archivo.close()
-            os.remove(ip['ip'])
+            #os.remove(ip['ip'])
 
         t = time.localtime()
         current_time = time.strftime("%d/%m/%y %H:%M:%S", t)
@@ -113,11 +102,11 @@ def getStadistics(file):
 def message_formater(json_resp):
     message = 'Se obtuvo informacion de los host:\n'
     for ip in json_resp:
-        if len(ip['info']) > 0:
+        if ip['hostname'] != '':
             message += ip['ip'] + ' - fecha de respuesta: ' + ip['fecha'] +'\n\t'
     message += '\nLas host que no respondieron son:\n'
     for ip in json_resp:
-        if len(ip['info']) == 0:
+        if ip['hostname'] == '':
             message += ip['ip'] + ' - fecha de respuesta: ' + ip['fecha'] + '\n'
     return message
 
